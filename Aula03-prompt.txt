@@ -1,0 +1,48 @@
+Ótimo, Joana! Vou te mostrar o **conceito de programação** voltado para um estudante de **Análise e Desenvolvimento de Sistemas**, usando um exemplo prático em **Python**.  
+
+---
+
+## 📌 Conceito
+Programação é o ato de **transformar problemas em soluções computacionais** por meio de **algoritmos** escritos em uma linguagem que o computador entende.  
+No curso de ADS, isso significa aprender a **analisar sistemas**, **modelar soluções** e **codificar** para que elas funcionem de forma eficiente.  
+
+---
+
+## 🖥️ Exemplo em Python
+Um exemplo simples que ilustra o conceito de programação é calcular a média de notas de um aluno:
+
+```python
+# Conceito de programação aplicado em Python
+
+# Passo 1: Definir o problema
+# Queremos calcular a média de notas de um aluno
+
+# Passo 2: Criar um algoritmo (sequência lógica)
+notas = [8.5, 7.0, 9.2, 6.8]  # lista de notas
+
+# Passo 3: Implementar em uma linguagem de programação
+media = sum(notas) / len(notas)
+
+# Passo 4: Mostrar o resultado
+print("A média do aluno é:", media)
+```
+
+---
+
+## 🔎 Explicação
+- **Análise:** Identificamos o problema (calcular média).  
+- **Desenvolvimento:** Criamos um algoritmo (somar notas e dividir pela quantidade).  
+- **Sistemas:** Implementamos em Python, que é uma linguagem de programação muito usada em ADS.  
+
+---
+
+## 🌍 Aplicação no curso
+Esse tipo de raciocínio é a base para:
+- Criar sistemas de gestão acadêmica.  
+- Desenvolver softwares empresariais.  
+- Trabalhar com bancos de dados e APIs.  
+- Automatizar tarefas repetitivas.  
+
+---
+
+👉 Quer que eu prepare um exemplo um pouco mais avançado, como um **mini-sistema em Python** que simula o cadastro de alunos e cálculo de médias, para conectar ainda mais com a prática de ADS?
