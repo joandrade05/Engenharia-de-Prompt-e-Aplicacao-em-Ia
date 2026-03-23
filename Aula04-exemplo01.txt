@@ -1,0 +1,52 @@
+Claro! Vou te mostrar um exemplo simples de programa em Python 😊
+
+### 🧮 Exemplo: Calculadora básica
+
+```python
+# Programa de calculadora simples
+
+print("Calculadora básica")
+print("Escolha a operação:")
+print("1 - Soma")
+print("2 - Subtração")
+print("3 - Multiplicação")
+print("4 - Divisão")
+
+opcao = input("Digite o número da operação: ")
+
+num1 = float(input("Digite o primeiro número: "))
+num2 = float(input("Digite o segundo número: "))
+
+if opcao == "1":
+    resultado = num1 + num2
+    print("Resultado:", resultado)
+
+elif opcao == "2":
+    resultado = num1 - num2
+    print("Resultado:", resultado)
+
+elif opcao == "3":
+    resultado = num1 * num2
+    print("Resultado:", resultado)
+
+elif opcao == "4":
+    if num2 != 0:
+        resultado = num1 / num2
+        print("Resultado:", resultado)
+    else:
+        print("Erro: divisão por zero!")
+
+else:
+    print("Opção inválida!")
+```
+
+---
+
+Se quiser, posso criar algo mais específico, tipo:
+
+* jogo 🎮
+* automação 🤖
+* programa com interface 🖥️
+* algo para estudos 📚
+
+Me diga o que você quer que o programa faça!
