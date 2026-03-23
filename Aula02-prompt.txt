@@ -1,0 +1,46 @@
+**Programação é o processo de criar instruções, em uma linguagem específica, para que computadores ou dispositivos executem tarefas. Em termos simples, é transformar ideias e soluções em código que pode ser interpretado por máquinas.**  
+
+---
+
+## 📌 Definição de Programação
+- **Ação de programar:** Planejar e ordenar ações para que sejam realizadas de forma lógica e sequencial.  
+- **No contexto da informática:** Escrever código-fonte em uma linguagem de programação (como Python, Java, C++) para criar softwares, aplicativos ou sistemas.  
+- **Objetivo principal:** Resolver problemas e automatizar tarefas por meio de algoritmos.  [Conceito.de](https://conceito.de/programacao)  
+
+---
+
+## 🖥️ Elementos Fundamentais
+- **Algoritmos:** Sequência de passos lógicos para resolver um problema.  
+- **Linguagens de programação:** Ferramentas que permitem expressar algoritmos de forma compreensível para máquinas (ex.: JavaScript, Python, C#).  
+- **Compiladores/Interpretadores:** Traduzem o código escrito pelo programador para linguagem de máquina.  
+- **Estruturas de dados:** Maneiras de organizar e armazenar informações (listas, árvores, tabelas).  
+- **Paradigmas de programação:** Diferentes estilos de pensar e organizar código, como programação orientada a objetos, funcional ou lógica.  [Brasil Code](https://www.brasilcode.com.br/fundamentos-da-programacao-guia-completo/)  
+
+---
+
+## 📊 Comparação de Significados
+
+| Aspecto                  | Programação (sentido geral) | Programação (informática) |
+|---------------------------|-----------------------------|----------------------------|
+| **Definição**             | Planejar e organizar ações  | Escrever código para softwares |
+| **Exemplo prático**       | Programar uma agenda cultural | Criar um aplicativo de celular |
+| **Ferramentas usadas**    | Planos, cronogramas         | Linguagens de programação, IDEs |
+| **Resultado esperado**    | Execução ordenada de tarefas | Software funcional e automatizado |  [Conceito.de](https://conceito.de/programacao)  
+
+---
+
+## 🌍 Importância no Mundo Atual
+- **Tecnologia cotidiana:** Aplicativos de mensagens, redes sociais, sistemas bancários e até semáforos dependem de programação.  
+- **Mercado de trabalho:** Profissionais de programação são altamente demandados em áreas como TI, engenharia, ciência de dados e inteligência artificial.  
+- **Educação e lógica:** Aprender programação desenvolve raciocínio lógico, resolução de problemas e criatividade.  [lucidarium.com.br](https://lucidarium.com.br/conceito-de-programacao-origem-definicao-e-significado/)  
+
+---
+
+## ⚠️ Pontos de Atenção
+- **Complexidade:** Programar exige atenção a detalhes; pequenos erros podem comprometer o funcionamento do sistema.  
+- **Evolução constante:** Linguagens e ferramentas mudam rapidamente, exigindo atualização contínua.  
+- **Impacto social:** Programação pode ser usada para o bem (automatização, acessibilidade) ou para fins nocivos (malwares, manipulação de dados).  
+
+---
+
+👉 Joana, se você quiser, posso te mostrar exemplos práticos de código simples em Python para ilustrar como funciona a programação na prática. Gostaria que eu faça isso?
