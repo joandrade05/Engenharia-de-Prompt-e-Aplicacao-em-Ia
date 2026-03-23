@@ -1,0 +1,110 @@
+## 🔁 Loop `for` em Python — explicação simples
+
+O `for` em Python é usado para **repetir um bloco de código várias vezes**, percorrendo uma sequência (como listas, strings ou números).
+
+---
+
+## 📌 Estrutura básica
+
+```python
+for variavel in sequencia:
+    # código que será repetido
+```
+
+* `variavel`: recebe cada valor da sequência a cada repetição
+* `sequencia`: pode ser uma lista, string, range, etc.
+
+---
+
+## 🔢 Exemplo prático com `range()`
+
+```python
+# Exemplo: imprimir números de 1 a 5
+
+for numero in range(1, 6):
+    print(numero)
+```
+
+### 💡 Explicação:
+
+* `range(1, 6)` gera números de **1 até 5** (o 6 não entra)
+* A cada volta do loop, `numero` recebe um valor diferente
+* O `print(numero)` mostra o valor atual
+
+👉 Saída:
+
+```
+1
+2
+3
+4
+5
+```
+
+---
+
+## 🧠 Exemplo prático do dia a dia
+
+### 🛒 Somando preços de uma lista
+
+```python
+# Lista de preços de produtos
+precos = [10, 20, 30, 40]
+
+total = 0  # variável para guardar a soma
+
+for preco in precos:
+    total += preco  # soma cada preço ao total
+
+print("Total da compra:", total)
+```
+
+### 💡 Explicação:
+
+* O loop percorre cada valor da lista `precos`
+* A cada repetição, soma o valor ao `total`
+* No final, mostra o total da compra
+
+👉 Saída:
+
+```
+Total da compra: 100
+```
+
+---
+
+## 🧩 Exemplo com string
+
+```python
+# Percorrendo letras de uma palavra
+
+for letra in "Python":
+    print(letra)
+```
+
+👉 Saída:
+
+```
+P
+y
+t
+h
+o
+n
+```
+
+---
+
+## ⚡ Resumindo
+
+* `for` serve para **percorrer elementos**
+* Funciona com listas, strings, números (`range`)
+* Muito usado para:
+
+  * repetir ações
+  * somar valores
+  * processar dados
+
+---
+
+Se quiser, posso te passar exercícios práticos para treinar ou comparar com o `while` 😉
