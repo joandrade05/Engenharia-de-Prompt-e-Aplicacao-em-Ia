@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dora - IA de Monitoramento Emocional">
+    <meta name="theme-color" content="#667eea">
+    <title>Dora - Monitoramento Emocional</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">🤖 Dora</h1>
+                <p class="subtitle">Seu assistente de bem-estar emocional</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+            <!-- Emotional Check-in Section -->
+            <section class="section emotion-check">
+                <h2>Como você está se sentindo?</h2>
+                <p class="section-subtitle">Compartilhe seu estado emocional com a Dora</p>
+                
+                <div class="emotion-buttons">
+                    <button class="emotion-btn" data-emotion="muito-feliz" title="Muito Feliz">
+                        <span class="emoji">😄</span>
+                        <span class="emotion-label">Muito Feliz</span>
+                    </button>
+                    <button class="emotion-btn" data-emotion="feliz" title="Feliz">
+                        <span class="emoji">🙂</span>
+                        <span class="emotion-label">Feliz</span>
+                    </button>
+                    <button class="emotion-btn" data-emotion="neutro" title="Neutro">
+                        <span class="emoji">😐</span>
+                        <span class="emotion-label">Neutro</span>
+                    </button>
+                    <button class="emotion-btn" data-emotion="triste" title="Triste">
+                        <span class="emoji">😕</span>
+                        <span class="emotion-label">Triste</span>
+                    </button>
+                    <button class="emotion-btn" data-emotion="muito-triste" title="Muito Triste">
+                        <span class="emoji">😢</span>
+                        <span class="emotion-label">Muito Triste</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Dora Response Section -->
+            <section class="section dora-response" id="doraResponse" style="display: none;">
+                <div class="response-box">
+                    <div class="dora-avatar">🤖</div>
+                    <div class="response-content">
+                        <h3>Dora diz:</h3>
+                        <p id="responseText"></p>
+                        <div class="response-suggestions">
+                            <p class="suggestions-title">Sugestões para você:</p>
+                            <ul id="suggestionsList"></ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mental Health Tips Section -->
+            <section class="section tips-section">
+                <h2>Dicas de Bem-estar</h2>
+                <p class="section-subtitle">Práticas recomendadas para sua saúde mental</p>
+                
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <span class="tip-icon">🧘</span>
+                        <h3>Meditação</h3>
+                        <p>Reserve 10 minutos diários para meditar e acalmar sua mente.</p>
+                    </div>
+                    <div class="tip-card">
+                        <span class="tip-icon">🚶</span>
+                        <h3>Atividade Física</h3>
+                        <p>Caminhe ou faça exercícios leves para liberar endorfinas.</p>
+                    </div>
+                    <div class="tip-card">
+                        <span class="tip-icon">💤</span>
+                        <h3>Sono de Qualidade</h3>
+                        <p>Durma 7-8 horas por noite para melhor bem-estar.</p>
+                    </div>
+                    <div class="tip-card">
+                        <span class="tip-icon">🍎</span>
+                        <h3>Alimentação Saudável</h3>
+                        <p>Coma alimentos nutritivos que nutram seu corpo e mente.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mood History Section -->
+            <section class="section mood-history">
+                <h2>Histórico de Emoções</h2>
+                <p class="section-subtitle">Últimos registros de seus sentimentos</p>
+                <ul class="history-list" id="historyList">
+                    <li class="history-item">Seu histórico será registrado aqui</li>
+                </ul>
+                <button class="btn-secondary" id="clearHistory">Limpar Histórico</button>
+            </section>
+
+            <!-- Chat Section -->
+            <section class="section chat-section">
+                <h2>Chat com Dora</h2>
+                <p class="section-subtitle">Converse sobre seus sentimentos</p>
+                
+                <div class="chat-container">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message bot-message">
+                            <p>Olá! Sou a Dora, sua IA de monitoramento emocional. Como posso ajudá-lo hoje?</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-input-area">
+                    <input 
+                        type="text" 
+                        id="chatInput" 
+                        class="chat-input" 
+                        placeholder="Digite suas preocupações..."
+                        maxlength="200"
+                    >
+                    <button class="btn-primary" id="sendBtn">Enviar</button>
+                </div>
+            </section>
+
+            <!-- Resources Section -->
+            <section class="section resources-section">
+                <h2>Recursos de Ajuda</h2>
+                <p class="section-subtitle">Quando você precisa de mais apoio</p>
+                
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <h3>CVV - Centro de Valorização da Vida</h3>
+                        <p>Atendimento gratuito 24h</p>
+                        <p class="phone">☎️ 188</p>
+                    </div>
+                    <div class="resource-card">
+                        <h3>Disque Saúde</h3>
+                        <p>Informações sobre saúde mental</p>
+                        <p class="phone">☎️ 136</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2026 Dora - IA de Monitoramento Emocional | Desenvolvido com ❤️</p>
+            <p class="footer-note">Esta aplicação não substitui atendimento profissional. Procure um psicólogo se necessário.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
