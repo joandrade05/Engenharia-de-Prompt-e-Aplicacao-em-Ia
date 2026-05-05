@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dora - IA de Monitoramento Emocional</title>
+    <style>
+        /* ================================
+           ROOT VARIABLES & RESET
+           ================================ */
+
+        :root {
+            /* Colors */
+            --primary-color: #9C27B0;
+            --secondary-color: #6A1B9A;
+            --accent-color: #CE93D8;
+            --success-color: #4CAF50;
+            --warning-color: #FFB300;
+            --danger-color: #F44336;
+            --info-color: #2196F3;
+            
+            /* Neutrals */
+            --dark-bg: #0F0F1E;
+            --light-bg: #F5F5F5;
+            --card-bg: #FFFFFF;
+            --text-primary: #212121;
+            --text-secondary: #757575;
+            --border-color: #E0E0E0;
+            
+            /* Spacing */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            
+            /* Typography */
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.5rem;
+            --font-size-2xl: 2rem;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+            
+            /* Transitions */
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            font-family: var(--font-family);
+            font-size: var(--font-size-base);
+            color: var(--text-primary);
+            background-color: var(--light-bg);
+            line-height: 1.6;
+        }
+
+        /* ================================
+           CONTAINER & LAYOUT
+           ================================ */
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .logo h1 {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .tagline {
+            font-size: var(--font-size-sm);
+            opacity: 0.9;
+            margin-top: var(--spacing-xs);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #FFB300;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .status-indicator.active {
+            background-color: var(--success-color);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 6px rgba(76, 175, 80, 0);
+            }
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .layout {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ================================
+           SIDEBAR NAVIGATION
+           ================================ */
+
+        .sidebar {
+            width: 220px;
+            background-color: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            padding: var(--spacing-lg);
+            overflow-y: auto;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .nav-item {
+            padding: var(--spacing-md);
+            background-color: var(--light-bg);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: var(--font-size-base);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: left;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .nav-item:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-color: var(--accent-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* ================================
+           CONTENT AREA
+           ================================ */
+
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: var(--spacing-xl);
+            background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ================================
+           CHAT SECTION
+           ================================ */
+
+        .chat-header {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .chat-header h2 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .chat-status {
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+        }
+
+        .chat-messages {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            height: 400px;
+            overflow-y: auto;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .message {
+            display: flex;
+            gap: var(--spacing-md);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-avatar {
+            font-size: 2rem;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .message-content {
+            background-color: var(--light-bg);
+            padding: var(--spacing-md);
+            border-radius: 8px;
+            max-width: 70%;
+        }
+
+        .message-content p {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .dora-message .message-content {
+            background: linear-gradient(135deg, var(--accent-color), #E1BEE7);
+            color: white;
+        }
+
+        .user-message {
+            justify-content: flex-end;
+        }
+
+        .user-message .message-content {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .timestamp {
+            font-size: var(--font-size-sm);
+            opacity: 0.7;
+            display: block;
+            margin-top: var(--spacing-sm);
+        }
+
+        .chat-input-area {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: var(--spacing-md);
+            box-shadow: var(--shadow-md);
+        }
+
+        .chat-form {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+
+        .message-input {
+            flex: 1;
+            padding: var(--spacing-md);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: var(--font-size-base);
+            font-family: var(--font-family);
+            transition: var(--transition);
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(156, 39, 176, 0.1);
+        }
+
+        .send-button {
+            padding: var(--spacing-md) var(--spacing-lg);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow-md);
+        }
+
+        .send-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .send-button:active {
+            transform: translateY(0);
+        }
+
+        /* ================================
+           DASHBOARD SECTION
+           ================================ */
+
+        .dashboard-header, .history-header, .insights-header {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .dashboard-header h2, .history-header h2, .insights-header h2 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: var(--font-size-lg);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-md);
+            font-size: var(--font-size-lg);
+        }
+
+        /* Emotional State Card */
+        .emotional-state {
+            grid-column: 1 / 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .emotion-display {
+            margin: var(--spacing-xl) 0;
+        }
+
+        .emotion-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--spacing-md);
+            box-shadow: var(--shadow-lg);
+            animation: pulse-circle 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-circle {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .emotion-emoji {
+            font-size: 3rem;
+        }
+
+        .emotion-label {
+            font-size: var(--font-size-lg);
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        /* Mood Chart */
+        .mood-chart {
+            grid-column: 2 / 3;
+        }
+
+        .chart-container {
+            padding: var(--spacing-md) 0;
+        }
+
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 150px;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+            padding: var(--spacing-md);
+            background-color: var(--light-bg);
+            border-radius: 8px;
+        }
+
+        .bar {
+            flex: 1;
+            background: linear-gradient(to top, var(--primary-color), var(--accent-color));
+            border-radius: 4px 4px 0 0;
+            min-height: 10px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .bar:hover {
+            background: linear-gradient(to top, var(--secondary-color), var(--primary-color));
+            transform: scaleY(1.05);
+        }
+
+        .chart-labels {
+            display: flex;
+            justify-content: space-around;
+            gap: var(--spacing-md);
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+        }
+
+        .chart-labels span {
+            flex: 1;
+            text-align: center;
+        }
+
+        /* Emotions Overview */
+        .emotions-overview {
+            grid-column: 3 / 4;
+        }
+
+        .emotions-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+
+        .emotion-item {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .emotion-bar {
+            grid-column: 1 / 2;
+            width: 100%;
+            height: 24px;
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .emotion-progress {
+            height: 100%;
+            border-radius: 12px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .emotion-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3));
+            border-radius: 12px;
+        }
+
+        .emotion-name {
+            grid-column: 2 / 3;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-align: right;
+        }
+
+        .emotion-percentage {
+            grid-column: 3 / 4;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-align: right;
+            min-width: 40px;
+        }
+
+        /* Statistics */
+        .statistics {
+            grid-column: 1 / 2;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-md);
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: var(--spacing-md);
+            background: linear-gradient(135deg, var(--light-bg), #ffffff);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .stat-item:hover {
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            color: white;
+        }
+
+        .stat-value {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .stat-item:hover .stat-value {
+            color: white;
+        }
+
+        .stat-label {
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            margin-top: var(--spacing-sm);
+        }
+
+        .stat-item:hover .stat-label {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* ================================
+           HISTORY SECTION
+           ================================ */
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .history-item {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            display: grid;
+            grid-template-columns: 120px 1fr 100px;
+            gap: var(--spacing-lg);
+            align-items: center;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        .history-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .history-date {
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .history-preview {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .history-text {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .history-emotion {
+            font-size: var(--font-size-sm);
+            color: var(--primary-color);
+        }
+
+        .view-button {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .view-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* ================================
+           INSIGHTS SECTION
+           ================================ */
+
+        .insights-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .insight-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            border-left: 5px solid;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        .insight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .insight-success {
+            border-left-color: var(--success-color);
+        }
+
+        .insight-warning {
+            border-left-color: var(--warning-color);
+        }
+
+        .insight-info {
+            border-left-color: var(--info-color);
+        }
+
+        .insight-icon {
+            font-size: 2rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .insight-card h4 {
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-md);
+            font-size: var(--font-size-lg);
+        }
+
+        .insight-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ================================
+           FOOTER
+           ================================ */
+
+        .footer {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+        }
+
+        .footer p {
+            margin: 0;
+        }
+
+        /* ================================
+           SCROLLBAR STYLING
+           ================================ */
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
+        }
+
+        /* ================================
+           RESPONSIVE DESIGN
+           ================================ */
+
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .emotional-state,
+            .mood-chart,
+            .emotions-overview {
+                grid-column: auto !important;
+            }
+
+            .statistics {
+                grid-column: auto !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: var(--spacing-md);
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                max-height: 80px;
+                overflow-x: auto;
+                overflow-y: hidden;
+            }
+
+            .nav-menu {
+                flex-direction: row;
+                gap: var(--spacing-md);
+                overflow-x: auto;
+                padding-bottom: var(--spacing-sm);
+            }
+
+            .nav-item {
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+
+            .content-area {
+                padding: var(--spacing-md);
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .message-content {
+                max-width: 85%;
+            }
+
+            .history-item {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-md);
+            }
+
+            .history-date {
+                order: -1;
+            }
+
+            .history-preview {
+                order: 0;
+            }
+
+            .view-button {
+                order: 1;
+            }
+
+            .insights-container {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                --spacing-lg: 1rem;
+                --font-size-2xl: 1.5rem;
+            }
+
+            .logo h1 {
+                font-size: var(--font-size-xl);
+            }
+
+            .chat-messages {
+                height: 300px;
+            }
+
+            .emotion-circle {
+                width: 100px;
+                height: 100px;
+            }
+
+            .emotion-emoji {
+                font-size: 2.5rem;
+            }
+
+            .bar-chart {
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">🤖</span>
+                    <div>
+                        <h1>DORA</h1>
+                        <p class="tagline">Seu Assistente de Bem-estar Emocional</p>
+                    </div>
+                </div>
+                <div class="user-info">
+                    <div class="status-indicator active"></div>
+                    <span>Online</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="layout">
+                <!-- SIDEBAR -->
+                <aside class="sidebar">
+                    <nav class="nav-menu">
+                        <button class="nav-item active" data-section="chat">
+                            💬 Chat
+                        </button>
+                        <button class="nav-item" data-section="dashboard">
+                            📊 Dashboard
+                        </button>
+                        <button class="nav-item" data-section="history">
+                            📋 Histórico
+                        </button>
+                        <button class="nav-item" data-section="insights">
+                            💡 Insights
+                        </button>
+                    </nav>
+                </aside>
+
+                <!-- CONTENT AREA -->
+                <div class="content-area">
+                    <!-- SECTION: CHAT -->
+                    <section id="chat-section" class="section active">
+                        <div class="chat-header">
+                            <h2>💬 Conversa com Dora</h2>
+                            <p class="chat-status">🟢 Dora está online e pronta para conversar</p>
+                        </div>
+
+                        <div class="chat-messages" id="chat-messages"></div>
+
+                        <div class="chat-input-area">
+                            <form class="chat-form" id="chat-form">
+                                <input 
+                                    type="text" 
+                                    id="message-input" 
+                                    class="message-input" 
+                                    placeholder="Digite sua mensagem aqui... (Ctrl+Enter para enviar)"
+                                    autocomplete="off"
+                                >
+                                <button type="submit" class="send-button">
+                                    ➤ Enviar
+                                </button>
+                            </form>
+                        </div>
+                    </section>
+
+                    <!-- SECTION: DASHBOARD -->
+                    <section id="dashboard-section" class="section">
+                        <div class="dashboard-header">
+                            <h2>📊 Dashboard Emocional</h2>
+                            <p class="subtitle">Visualize suas emoções e padrões de bem-estar</p>
+                        </div>
+
+                        <div class="dashboard-grid">
+                            <!-- Estado Emocional Atual -->
+                            <div class="card emotional-state">
+                                <h3>Estado Emocional Atual</h3>
+                                <div class="emotion-display">
+                                    <div class="emotion-circle">
+                                        <span class="emotion-emoji">😊</span>
+                                    </div>
+                                    <p class="emotion-label">Alegre</p>
+                                </div>
+                            </div>
+
+                            <!-- Gráfico de Humor -->
+                            <div class="card mood-chart">
+                                <h3>Humor da Semana</h3>
+                                <div class="chart-container">
+                                    <div class="bar-chart">
+                                        <div class="bar" style="height: 60%;"></div>
+                                        <div class="bar" style="height: 75%;"></div>
+                                        <div class="bar" style="height: 85%;"></div>
+                                        <div class="bar" style="height: 70%;"></div>
+                                        <div class="bar" style="height: 80%;"></div>
+                                        <div class="bar" style="height: 90%;"></div>
+                                        <div class="bar" style="height: 88%;"></div>
+                                    </div>
+                                    <div class="chart-labels">
+                                        <span>Seg</span>
+                                        <span>Ter</span>
+                                        <span>Qua</span>
+                                        <span>Qui</span>
+                                        <span>Sex</span>
+                                        <span>Sab</span>
+                                        <span>Dom</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Emoções em Detalhes -->
+                            <div class="card emotions-overview">
+                                <h3>Emoções Detectadas</h3>
+                                <div class="emotions-list">
+                                    <div class="emotion-item">
+                                        <div class="emotion-bar">
+                                            <div class="emotion-progress" style="width: 85%; background: linear-gradient(90deg, #4CAF50, #8BC34A);"></div>
+                                        </div>
+                                        <span class="emotion-name">Alegria</span>
+                                        <span class="emotion-percentage">85%</span>
+                                    </div>
+                                    <div class="emotion-item">
+                                        <div class="emotion-bar">
+                                            <div class="emotion-progress" style="width: 35%; background: linear-gradient(90deg, #2196F3, #64B5F6);"></div>
+                                        </div>
+                                        <span class="emotion-name">Calma</span>
+                                        <span class="emotion-percentage">35%</span>
+                                    </div>
+                                    <div class="emotion-item">
+                                        <div class="emotion-bar">
+                                            <div class="emotion-progress" style="width: 25%; background: linear-gradient(90deg, #FFB300, #FFC107);"></div>
+                                        </div>
+                                        <span class="emotion-name">Ansiedade</span>
+                                        <span class="emotion-percentage">25%</span>
+                                    </div>
+                                    <div class="emotion-item">
+                                        <div class="emotion-bar">
+                                            <div class="emotion-progress" style="width: 15%; background: linear-gradient(90deg, #F44336, #EF5350);"></div>
+                                        </div>
+                                        <span class="emotion-name">Tristeza</span>
+                                        <span class="emotion-percentage">15%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Estatísticas -->
+                            <div class="card statistics">
+                                <h3>Estatísticas</h3>
+                                <div class="stats-grid">
+                                    <div class="stat-item">
+                                        <div class="stat-value">24</div>
+                                        <div class="stat-label">Conversas</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-value">8h</div>
+                                        <div class="stat-label">Tempo Total</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-value">4</div>
+                                        <div class="stat-label">Dias Seguidos</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION: HISTORY -->
+                    <section id="history-section" class="section">
+                        <div class="history-header">
+                            <h2>📋 Histórico de Conversas</h2>
+                            <p class="subtitle">Acompanhe suas conversas anteriores com a Dora</p>
+                        </div>
+
+                        <div class="history-list">
+                            <div class="history-item">
+                                <div class="history-date">
+                                    📅 02/05/2026
+                                    <br>14:30
+                                </div>
+                                <div class="history-preview">
+                                    <p class="history-text">"Como lidar com o estresse do trabalho?"</p>
+                                    <span class="history-emotion">😰 Ansiedade detectada</span>
+                                </div>
+                                <button class="view-button">Ver</button>
+                            </div>
+
+                            <div class="history-item">
+                                <div class="history-date">
+                                    📅 01/05/2026
+                                    <br>19:45
+                                </div>
+                                <div class="history-preview">
+                                    <p class="history-text">"Tive um dia incrível no trabalho!"</p>
+                                    <span class="history-emotion">😊 Alegria detectada</span>
+                                </div>
+                                <button class="view-button">Ver</button>
+                            </div>
+
+                            <div class="history-item">
+                                <div class="history-date">
+                                    📅 30/04/2026
+                                    <br>10:15
+                                </div>
+                                <div class="history-preview">
+                                    <p class="history-text">"Preciso de ajuda com minhas relações pessoais"</p>
+                                    <span class="history-emotion">😔 Tristeza detectada</span>
+                                </div>
+                                <button class="view-button">Ver</button>
+                            </div>
+
+                            <div class="history-item">
+                                <div class="history-date">
+                                    📅 29/04/2026
+                                    <br>16:00
+                                </div>
+                                <div class="history-preview">
+                                    <p class="history-text">"Estou me sentindo calmo e em paz"</p>
+                                    <span class="history-emotion">😌 Serenidade detectada</span>
+                                </div>
+                                <button class="view-button">Ver</button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION: INSIGHTS -->
+                    <section id="insights-section" class="section">
+                        <div class="insights-header">
+                            <h2>💡 Insights e Recomendações</h2>
+                            <p class="subtitle">Dicas personalizadas para melhorar seu bem-estar</p>
+                        </div>
+
+                        <div class="insights-container">
+                            <div class="insight-card insight-success">
+                                <div class="insight-icon">✅</div>
+                                <h4>Parabéns!</h4>
+                                <p>Você tem mantido um excelente nível de bem-estar. Continue com as práticas que está fazendo!</p>
+                            </div>
+
+                            <div class="insight-card insight-warning">
+                                <div class="insight-icon">⚠️</div>
+                                <h4>Atenção</h4>
+                                <p>Detectamos picos de ansiedade nos últimos 3 dias. Que tal praticar uma técnica de meditação?</p>
+                            </div>
+
+                            <div class="insight-card insight-info">
+                                <div class="insight-icon">💤</div>
+                                <h4>Qualidade do Sono</h4>
+                                <p>Você relatou dormir melhor quando pratica exercícios físicos. Mantenha essa rotina!</p>
+                            </div>
+
+                            <div class="insight-card insight-info">
+                                <div class="insight-icon">🧘</div>
+                                <h4>Meditação Diária</h4>
+                                <p>Apenas 10 minutos de meditação por dia podem reduzir significativamente o estresse.</p>
+                            </div>
+
+                            <div class="insight-card insight-success">
+                                <div class="insight-icon">👥</div>
+                                <h4>Relações Sociais</h4>
+                                <p>Sua alegria aumenta após interações sociais. Passe mais tempo com pessoas que você ama!</p>
+                            </div>
+
+                            <div class="insight-card insight-warning">
+                                <div class="insight-icon">🎯</div>
+                                <h4>Estabeleça Metas</h4>
+                                <p>Pessoas com objetivos claros relatam maior satisfação. Defina suas metas de curto prazo!</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <p>💜 Desenvolvido com amor | Dora - Assistente de Bem-estar Emocional v1.0</p>
+        </footer>
+    </div>
+
+    <script>
+        // ================================
+        // DORA - Emotional Monitoring AI
+        // Navigation & Interactivity
+        // ================================
+
+        // Get all navigation items and sections
+        const navItems = document.querySelectorAll('.nav-item');
+        const sections = document.querySelectorAll('.section');
+        const chatForm = document.getElementById('chat-form');
+        const messageInput = document.getElementById('message-input');
+        const chatMessages = document.querySelector('.chat-messages');
+
+        // Sample responses from Dora AI
+        const doraResponses = {
+            greeting: [
+                'Que bom te ver! Como você está se sentindo hoje?',
+                'Olá! Estou aqui para te ouvir. O que está em sua mente?',
+                'Oi! Vamos conversar sobre seus sentimentos?'
+            ],
+            positive: [
+                'Que alegria! É incrível ouvir isso! 😊',
+                'Que maravilhoso! Continue assim!',
+                'Adorei ouvir isso! Você está brilhando! ✨'
+            ],
+            negative: [
+                'Entendo que você está passando por isso. Quer falar mais sobre?',
+                'Estou aqui para ajudar. Todos temos dias difíceis.',
+                'Obrigada por compartilhar. Vamos trabalhar juntas nisto.'
+            ],
+            anxiety: [
+                'A ansiedade é comum. Que tal tentarmos uma técnica de respiração?',
+                'Eu sinto que você está um pouco ansioso. Posso ajudar com algumas estratégias.',
+                'Tudo bem sentir-se assim. Vamos encontrar maneiras de acalmar.'
+            ],
+            gratitude: [
+                'De nada! Estou aqui sempre que precisar! 💜',
+                'Fico feliz em poder ajudar!',
+                'Você é incrível! Continue tomando conta de você!'
+            ]
+        };
+
+        // ================================
+        // EVENT LISTENERS
+        // ================================
+
+        // Navigation switching
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove active class from all items
+                navItems.forEach(nav => nav.classList.remove('active'));
+                sections.forEach(section => section.classList.remove('active'));
+
+                // Add active class to clicked item
+                item.classList.add('active');
+                const sectionId = `${item.dataset.section}-section`;
+                const section = document.getElementById(sectionId);
+                
+                if (section) {
+                    section.classList.add('active');
+                }
+            });
+        });
+
+        // Chat form submission
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const message = messageInput.value.trim();
+            
+            if (message === '') return;
+
+            // Add user message
+            addMessage(message, 'user');
+            
+            // Clear input
+            messageInput.value = '';
+            messageInput.focus();
+
+            // Simulate Dora's response with delay
+            setTimeout(() => {
+                const response = generateDoraResponse(message);
+                addMessage(response, 'dora');
+            }, 500 + Math.random() * 1000);
+        });
+
+        // ================================
+        // FUNCTIONS
+        // ================================
+
+        /**
+         * Add a message to the chat
+         * @param {string} message - The message text
+         * @param {string} sender - 'user' or 'dora'
+         */
+        function addMessage(message, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+
+            const timestamp = new Date().toLocaleTimeString('pt-BR', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            if (sender === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="message-content">
+                        <p>${escapeHtml(message)}</p>
+                        <span class="timestamp">${timestamp}</span>
+                    </div>
+                    <div class="message-avatar">👤</div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        <p>${message}</p>
+                        <span class="timestamp">Agora</span>
+                    </div>
+                `;
+            }
+
+            chatMessages.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        /**
+         * Generate a response from Dora based on user message
+         * @param {string} message - User message
+         * @returns {string} - Dora's response
+         */
+        function generateDoraResponse(message) {
+            const lowerMessage = message.toLowerCase();
+
+            // Detect emotion and respond accordingly
+            if (
+                lowerMessage.includes('obrigado') ||
+                lowerMessage.includes('obrigada') ||
+                lowerMessage.includes('valeu')
+            ) {
+                return getRandomResponse(doraResponses.gratitude);
+            }
+
+            if (
+                lowerMessage.includes('ansiedade') ||
+                lowerMessage.includes('ansioso') ||
+                lowerMessage.includes('preocupado') ||
+                lowerMessage.includes('assustado')
+            ) {
+                return getRandomResponse(doraResponses.anxiety);
+            }
+
+            if (
+                lowerMessage.includes('feliz') ||
+                lowerMessage.includes('alegre') ||
+                lowerMessage.includes('bem') ||
+                lowerMessage.includes('ótimo') ||
+                lowerMessage.includes('excelente')
+            ) {
+                return getRandomResponse(doraResponses.positive);
+            }
+
+            if (
+                lowerMessage.includes('triste') ||
+                lowerMessage.includes('mal') ||
+                lowerMessage.includes('ruim') ||
+                lowerMessage.includes('deprimido') ||
+                lowerMessage.includes('infeliz')
+            ) {
+                return getRandomResponse(doraResponses.negative);
+            }
+
+            // Default response
+            return getRandomResponse([
+                'Entendi! Pode me contar mais sobre isso?',
+                'Interessante! Como você se sente com relação a isso?',
+                'Que perspectiva interessante. Qual é o contexto?',
+                'Ótimo! Vamos conversar mais sobre isso.'
+            ]);
+        }
+
+        /**
+         * Get a random response from an array
+         * @param {array} responseArray - Array of responses
+         * @returns {string} - Random response
+         */
+        function getRandomResponse(responseArray) {
+            return responseArray[Math.floor(Math.random() * responseArray.length)];
+        }
+
+        /**
+         * Escape HTML special characters
+         * @param {string} text - Text to escape
+         * @returns {string} - Escaped text
+         */
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ================================
+        // INITIALIZATION
+        // ================================
+
+        /**
+         * Initialize the application
+         */
+        function initialize() {
+            console.log('Dora AI Initialized ✨');
+            
+            // Show welcome message
+            addMessage(doraResponses.greeting[0], 'dora');
+            
+            // Add keyboard shortcut info
+            document.addEventListener('keydown', (e) => {
+                // Ctrl/Cmd + Enter to send message
+                if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                    if (document.activeElement === messageInput) {
+                        chatForm.dispatchEvent(new Event('submit'));
+                    }
+                }
+            });
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', initialize);
+
+        // ================================
+        // ADDITIONAL INTERACTIVITY
+        // ================================
+
+        // Add smooth scroll behavior
+        document.documentElement.style.scrollBehavior = 'smooth';
+
+        // Track user focus for engagement
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                console.log('Dora paused - tab not active');
+            } else {
+                console.log('Dora resumed - welcome back!');
+            }
+        });
+
+        // Prevent empty messages
+        messageInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                chatForm.dispatchEvent(new Event('submit'));
+            }
+        });
+
+        // Add active state to navigation on page load
+        window.addEventListener('load', () => {
+            console.log('Dora AI fully loaded and ready!');
+        });
+    </script>
+</body>
+</html>
