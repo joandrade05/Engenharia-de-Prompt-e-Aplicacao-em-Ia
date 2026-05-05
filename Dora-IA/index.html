@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dora - IA de Monitoramento Emocional</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">🤖</span>
+                    <div>
+                        <h1>DORA</h1>
+                        <p class="tagline">Seu Assistente de Bem-estar Emocional</p>
+                    </div>
+                </div>
+                <div class="user-info">
+                    <div class="status-indicator active"></div>
+                    <span>Online</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="layout">
+                <!-- SIDEBAR -->
+                <aside class="sidebar">
+                    <nav class="nav-menu">
+                        <button class="nav-item active" data-section="chat">
+                            💬 Chat
+                        </button>
+                        <button class="nav-item" data-section="dashboard">
+                            📊 Dashboard
+                        </button>
+                        <button class="nav-item" data-section="history">
+                            📋 Histórico
+                        </button>
+                        <button class="nav-item" data-section="insights">
+                            💡 Insights
+                        </button>
+                    </nav>
+                </aside>
+
+                <!-- CONTENT AREA -->
+                <div class="content-area">
+                    <!-- SECTION: CHAT -->
+                    <section id="chat-section" class="section active">
+                        <div class="chat-header">
+                            <h2>💬 Conversa com Dora</h2>
+                            <p class="chat-status">🟢 Dora está online e pronta para conversar</p>
+                        </div>
+
+                        <div class="chat-messages" id="chat-messages"></div>
+
+                        <div class="chat-input-area">
+                            <form class="chat-form" id="chat-form">
+                                <input 
+                                    type="text" 
+                                    id="message-input" 
+                                    class="message-input" 
+                                    placeholder="Digite sua mensagem aqui... (Ctrl+Enter para enviar)"
+                                    autocomplete="off"
+                                >
+                                <button type="submit" class="send-button">
+                                    ➤ Enviar
+                                </button>
+                            </form>
+                        </div>
+                    </section>
+
+                    <!-- SECTION: DASHBOARD -->
+                    <section id="dashboard-section" class="section">
+                        <div class="dashboard-header">
+                            <h2>📊 Dashboard Emocional</h2>
+                            <p class="subtitle">Visualize suas emoções e padrões de bem-estar</p>
+                        </div>
+
+                        <div class="dashboard-grid">
+                            <!-- Estado Emocional Atual -->
+                            <div class="card emotional-state">
+                                <h3>Estado Emocional Atual</h3>
+                                <div class="emotion-display">
+                                    <div class="emotion-circle">
+                                        <span class="emotion-emoji">😊</span>
+                                    </div>
+                                    <p class="emotion-label">Alegre</p>
+                                </div>
+                            </div>
+
+                            <!-- Gráfico de Humor -->
+                            <div class="card mood-chart">
+                                <h3>Humor da Semana</h3>
+                                <div class="chart-container">
+                                    <div class="bar-chart">
+                                        <div class="bar" style="height: 60%;"></div>
+                                        <div class="bar" style="height: 75%;"></div>
+                                        <div class="bar" style="height: 85%;"></div>
+                                        <div class="bar" style="height: 70%;"></div>
+                                        <div class="bar" style="height: 80%;"></div>
+                                        <div class="bar" style="height: 90%;"></div>
+                                        <div class="bar" style="height: 88%;"></div>
+                                    </div>
+                                    <div class="chart-labels">
+                                        <span>Seg</span>
+                                        <span>Ter</span>
+                                        <span>Qua</span>
+                                        <span>Qui</span>
+                                        <span>Sex</span>
+                                        <span>Sab</span>
+                                        <span>Dom</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Emoções em Detalhes -->
+                            <div class="card emotions-overview">
+                                <h3>Emoções Detectadas</h3>
+                                <div class="emotions-list">
+                                    <div class="emotion-item">
+                                        <div class="emotion-bar">
+                                            <div class="emotion-progress" style="width: 85%; background: linear-gradient(90deg, #4CAF50, #8BC34A);"></div>
+                                        </div>
+                                        <span class="emotion-name">Alegria</span>
+                                        <span class="emotion-percentage">85%</span>
+                                    </div>
+                                    <div class="emotion-item">
+                                        <div class="emotion-bar">
+                                            <div class="emotion-progress" style="width: 35%; background: linear-gradient(90deg, #2196F3, #64B5F6);"></div>
+                                        </div>
+                                        <span class="emotion-name">Calma</span>
+                                        <span class="emotion-percentage">35%</span>
+                                    </div>
+                                    <div class="emotion-item">
+                                        <div class="emotion-bar">
+                                            <div class="emotion-progress" style="width: 25%; background: linear-gradient(90deg, #FFB300, #FFC107);"></div>
+                                        </div>
+                                        <span class="emotion-name">Ansiedade</span>
+                                        <span class="emotion-percentage">25%</span>
+                                    </div>
+                                    <div class="emotion-item">
+                                        <div class="emotion-bar">
+                                            <div class="emotion-progress" style="width: 15%; background: linear-gradient(90deg, #F44336, #EF5350);"></div>
+                                        </div>
+                                        <span class="emotion-name">Tristeza</span>
+                                        <span class="emotion-percentage">15%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Estatísticas -->
+                            <div class="card statistics">
+                                <h3>Estatísticas</h3>
+                                <div class="stats-grid">
+                                    <div class="stat-item">
+                                        <div class="stat-value">24</div>
+                                        <div class="stat-label">Conversas</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-value">8h</div>
+                                        <div class="stat-label">Tempo Total</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-value">4</div>
+                                        <div class="stat-label">Dias Seguidos</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION: HISTORY -->
+                    <section id="history-section" class="section">
+                        <div class="history-header">
+                            <h2>📋 Histórico de Conversas</h2>
+                            <p class="subtitle">Acompanhe suas conversas anteriores com a Dora</p>
+                        </div>
+
+                        <div class="history-list">
+                            <div class="history-item">
+                                <div class="history-date">
+                                    📅 02/05/2026
+                                    <br>14:30
+                                </div>
+                                <div class="history-preview">
+                                    <p class="history-text">"Como lidar com o estresse do trabalho?"</p>
+                                    <span class="history-emotion">😰 Ansiedade detectada</span>
+                                </div>
+                                <button class="view-button">Ver</button>
+                            </div>
+
+                            <div class="history-item">
+                                <div class="history-date">
+                                    📅 01/05/2026
+                                    <br>19:45
+                                </div>
+                                <div class="history-preview">
+                                    <p class="history-text">"Tive um dia incrível no trabalho!"</p>
+                                    <span class="history-emotion">😊 Alegria detectada</span>
+                                </div>
+                                <button class="view-button">Ver</button>
+                            </div>
+
+                            <div class="history-item">
+                                <div class="history-date">
+                                    📅 30/04/2026
+                                    <br>10:15
+                                </div>
+                                <div class="history-preview">
+                                    <p class="history-text">"Preciso de ajuda com minhas relações pessoais"</p>
+                                    <span class="history-emotion">😔 Tristeza detectada</span>
+                                </div>
+                                <button class="view-button">Ver</button>
+                            </div>
+
+                            <div class="history-item">
+                                <div class="history-date">
+                                    📅 29/04/2026
+                                    <br>16:00
+                                </div>
+                                <div class="history-preview">
+                                    <p class="history-text">"Estou me sentindo calmo e em paz"</p>
+                                    <span class="history-emotion">😌 Serenidade detectada</span>
+                                </div>
+                                <button class="view-button">Ver</button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION: INSIGHTS -->
+                    <section id="insights-section" class="section">
+                        <div class="insights-header">
+                            <h2>💡 Insights e Recomendações</h2>
+                            <p class="subtitle">Dicas personalizadas para melhorar seu bem-estar</p>
+                        </div>
+
+                        <div class="insights-container">
+                            <div class="insight-card insight-success">
+                                <div class="insight-icon">✅</div>
+                                <h4>Parabéns!</h4>
+                                <p>Você tem mantido um excelente nível de bem-estar. Continue com as práticas que está fazendo!</p>
+                            </div>
+
+                            <div class="insight-card insight-warning">
+                                <div class="insight-icon">⚠️</div>
+                                <h4>Atenção</h4>
+                                <p>Detectamos picos de ansiedade nos últimos 3 dias. Que tal praticar uma técnica de meditação?</p>
+                            </div>
+
+                            <div class="insight-card insight-info">
+                                <div class="insight-icon">💤</div>
+                                <h4>Qualidade do Sono</h4>
+                                <p>Você relatou dormir melhor quando pratica exercícios físicos. Mantenha essa rotina!</p>
+                            </div>
+
+                            <div class="insight-card insight-info">
+                                <div class="insight-icon">🧘</div>
+                                <h4>Meditação Diária</h4>
+                                <p>Apenas 10 minutos de meditação por dia podem reduzir significativamente o estresse.</p>
+                            </div>
+
+                            <div class="insight-card insight-success">
+                                <div class="insight-icon">👥</div>
+                                <h4>Relações Sociais</h4>
+                                <p>Sua alegria aumenta após interações sociais. Passe mais tempo com pessoas que você ama!</p>
+                            </div>
+
+                            <div class="insight-card insight-warning">
+                                <div class="insight-icon">🎯</div>
+                                <h4>Estabeleça Metas</h4>
+                                <p>Pessoas com objetivos claros relatam maior satisfação. Defina suas metas de curto prazo!</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <p>💜 Desenvolvido com amor | Dora - Assistente de Bem-estar Emocional v1.0</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
